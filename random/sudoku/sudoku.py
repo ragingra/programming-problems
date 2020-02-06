@@ -10,7 +10,11 @@ board = [
 	[0,0,7,5,0,9,0,0,0]
 ]
 
+import time
+
 def solve(bo):
+    time.sleep(0.1)
+    draw_board(bo)
     find = find_next(bo)
     
     if not find:
