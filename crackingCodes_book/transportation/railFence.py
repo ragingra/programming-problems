@@ -1,22 +1,20 @@
-import itertools
+from itertools import cycle
+
+def rail_pattern(n):
+    r = list(range(n))
+    return cycle(r + r[-2:0:-1])
 
 def encrypt(text, key):
-    output = [[] for num in range(key)]
-    column = 0
-    increase = False 
+    p = rail_pattern(key)
+    return ''.join(sorted(text, key=lambda i: next(p)))
 
-    for char in text:
-        output[column].append(char)
-
-        if column == key -1 or column == 0:
-            increase = not increase
-
-        if increase:
-            column += 1
-        else:
-            column -= 1
-
-    return ''.join(itertools.chain(*output))
+def decrypt(text, key):
+    p = rail_pattern(key)
+    indexes = sorted(range(len(text)), key=lambda i: next(p))
+    output = [''] * len(text)
+    for i, c in zip(indexes, text):
+        output[i] = c
+    return ''.join(output)
 
 message = "Common sense is not so common."
 key = 3
@@ -24,3 +22,5 @@ key = 3
 print(f"Message: {message}")
 encrypted = encrypt(message, key)
 print(f"Encypted: {encrypted}")
+decrypted = decrypt(encrypted, key)
+print(f"Decrypted: {decrypted}")
