@@ -1,7 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 
-order = 4
+order = 5
 n = int(pow(2, order))
 total = n * n
 
@@ -51,13 +51,24 @@ for i in range(total):
     path[i] = tuple([scale * num for num in path[i]])
     path[i] = tuple([num + (scale/2) for num in path[i]])
 
-for i in range(total-1):
-    pygame.draw.line(DISPLAY, WHITE, path[i], path[i+1])
+counter = 0
 
 
 while True:
+    pygame.time.delay(10)
     for event in pygame.event.get():
         if event.type==QUIT:
             pygame.quit()
             sys.exit()
+
+
+    for i in range(counter):
+        pygame.draw.line(DISPLAY, WHITE, path[i], path[i+1])
+
+    counter +=1
+    if counter >= total:
+        counter = 0
+        DISPLAY.fill(BLACK)
+
     pygame.display.update()
+
